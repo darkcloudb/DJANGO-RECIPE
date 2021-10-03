@@ -1,0 +1,32 @@
+{% comment %} not included in assessment instructions, added for QOL {%
+endcomment %} {% comment %} included in assessment instructions {% endcomment %}
+<a href="/">Home</a>
+<a href="/addrecipe/">Add Recipe</a>
+<a href="/addauthor/">Add Author</a>
+{% if request.user.is_authenticated %}
+<a href="/logout/">Logout</a>
+{% else %}
+<a href="/login/">Login</a>
+{% endif %}
+<a href="/admin/">Admin</a>
+<h1>Recipe</h1>
+<div>
+  <p>Title: {{recipe.title}}</p>
+  <p>Author: <a href="/author/{{recipe.author.id}}/">{{recipe.created_by}}</a></p>
+  <p>Description: {{recipe.description}}</p>
+  <p>Time Required: {{recipe.time_required}}</p>
+  <p>Instructions: {{recipe.instructions}}</p>
+</div>
+{% if request.user.is_authenticated %}
+<div>
+  <a href="/like/{{recipe.id}}/"><button>Like</button></a>
+  <a href="/unlike/{{recipe.id}}/"><button>Unlike</button></a>
+</div>
+{% endif %} {% if recipe.created_by == request.user or request.user.is_staff %}
+<br></br>
+<a href="/recipes/{{recipe.id}}/edit/"><button>Edit</button></a>
+{% endif %} 
+<!-- {% if request.user.is_staff %}
+<br></br>
+<a href="/recipes/{{recipe.id}}/edit/"><button>Edit</button></a>
+{% endif %} -->
